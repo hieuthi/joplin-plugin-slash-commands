@@ -124,3 +124,4 @@ Date.prototype.format = function (mask, utc) {
 	return dateFormat(this, mask, utc);
 };
 
+module.exports = dateFormat;
