@@ -19,6 +19,8 @@
 
   max-height: 20em;
   overflow-y: auto;
+
+  tab-size:  3;
 }
 
 .CodeMirror-hint {
