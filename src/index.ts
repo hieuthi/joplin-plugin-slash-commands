@@ -6,17 +6,6 @@ const DEFAULT_DEFINITIONS = '[["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm
 
 joplin.plugins.register({
   onStart: async function() {
-    async function updateSlashCommands(){
-      const defstring   = await joplin.settings.value('slash_definitions') as string;
-      try {
-        const definitions = JSON.parse(defstring);
-        await joplin.commands.execute('editor.execCommand', {name: "setOption", args: ["slashCommands", definitions]});
-        console.log("Slash Commands: Sucessfully loaded " + defstring);
-      } catch (error) {
-        console.log("ERROR: Slash Commands Plugin has failed to parse commands definition, please check your syntax");
-        console.log("ERROR: " + error);
-      }
-    }
 
     await joplin.contentScripts.register(
       ContentScriptType.CodeMirrorPlugin,
@@ -39,8 +28,24 @@ joplin.plugins.register({
                       Please check plugin github page for details.`
       },
     });
-    await joplin.settings.onChange(updateSlashCommands);
+    await joplin.settings.onChange(function(){
+      joplin.commands.execute('editor.execCommand', {name: "setOption", args: ["slashCommands", true]});
+    });
 
-    updateSlashCommands();
+    await joplin.contentScripts.onMessage('slashCommands', async (message:any) => {
+      if (message == "get-definitions") {
+        const defstring = await joplin.settings.value('slash_definitions') as string;
+        try {
+          const definitions = JSON.parse(defstring);
+          console.log("Slash Commands: Sucessfully loaded " + defstring);
+          return definitions;
+        } catch (error) {
+          console.log("ERROR: Slash Commands Plugin has failed to parse commands definition, please check your syntax");
+          console.log("ERROR: " + error);
+          return [];
+        }
+      }
+      return null;
+    });
   },
 });
