@@ -1,24 +1,56 @@
-# Joplin Plugin
+# Slash Commands: Datetime & More
 
-This is a template to create a new Joplin plugin.
+This plugin is a collection of utility commands that can be executed by typing corresponding keywords, which start with a slash ('/'). Current version only supports two type of commands but more might be added in the future.
 
-The main two files you will want to look at are:
 
-- `/src/index.ts`, which contains the entry point for the plugin source code.
-- `/src/manifest.json`, which is the plugin manifest. It contains information such as the plugin a name, version, etc.
+![screencap](https://raw.githubusercontent.com/hieuthi/joplin-plugin-slash-commands/main/docs/slash-commands-v1.0.0-screencap.gif)
 
-## Building the plugin
 
-The plugin is built using Webpack, which creates the compiled code in `/dist`. A JPL archive will also be created at the root, which can use to distribute the plugin.
+## Usage
+### String Command
+- String commands simply replace a keyword with one of the predefined strings.
+- **Built-in**: `/greet`, `/task`, `todotxt`
+- **Definition**: `[ "string" , "<keyword>", ["<string1>", "<string2" ] ]`
 
-To build the plugin, simply run `npm run dist`.
+### Datetime Command
+- Datetime commands print out the current now with one of the predefined datestring format. Optionally you can offset the time by day, hour, and minutes
+- **Built-in**: `/now`, `/date`, `/time`, `/todoa`, `/todob`, `/todoc`, `/todod`, `/todoe`
+- **Offset examples**: adding `/now+d-H:M`, subtracting `/now-d-H:M`
+- **Offset formats**: `d-H:M`, `d-H`, `H:M`, `d`
+- **Definition**: `[ "string" , "<keyword>", ["<format1>", "<format2>" ] ]`
+- This command uses [Javascript Date Format](https://blog.stevenlevithan.com/archives/date-time-format) to parse datestring. You can check the original library on how to form your own `format`.
 
-The project is setup to use TypeScript, although you can change the configuration to use plain JavaScript.
+### Customization
+Even though there is only several types of commands, you can create many useful commands to serve your needs by setting the command definitions in the plugin setting by yourself. The commands definitions is an array of array but due to some awkwardness with Javascript and JSON string parse you need to carefully escape it.
 
-## Updating the plugin framework
+```
+[
+  ["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ],
+  ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ],
+  ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ],
+  ["string", "greet", [ "Hello World" ] ],
+  ["string", "task", [ "- [ ] " ] ],
+  ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ],
+  ["datetime", "todoa", [ "\"(A)\" yyyy-mm-dd " ] ],
+  ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ],
+  ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ],
+  ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ],
+  ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ]
+]
+```
 
-To update the plugin framework, run `npm run update`.
+There is another awkwardness with Joplin Plugin Setting that only accept a single line value so you need to minify it like this.
 
-In general this command tries to do the right thing - in particular it's going to merge the changes in package.json and .gitignore instead of overwriting. It will also leave "/src" as well as README.md untouched.
+```
+[["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ], ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ], ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ], ["string", "greet", [ "Hello World" ] ], ["string", "task", [ "- [ ] " ] ], ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ], ["datetime", "todoa", [ "\"(A)\" yyyy-mm-dd " ] ], ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ], ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ], ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ], ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ] ]
+```
 
-The file that may cause problem is "webpack.config.js" because it's going to be overwritten. For that reason, if you want to change it, consider creating a separate JavaScript file and include it in webpack.config.js. That way, when you update, you only have to restore the line that include your file.
+I will try to improve the configuration process when I find a better solution. If you messed with the setting and the plugin is no longer work, try paste the above definitions to your setting.
+
+## Acknowledgements
+- Many thanks to @roman-r-m for the great [Quick Link](https://github.com/roman-r-m/joplin-plugin-quick-links) plugin which I used a lot and also a reference for this plugin
+- And Steven Levithan for a simple and easy-to-use [JavaScript Date Format Library](https://blog.stevenlevithan.com/archives/date-time-format)
+
+## License
+
+[MIT](https://raw.githubusercontent.com/hieuthi/joplin-plugin-slash-commands/main/LICENSE)
