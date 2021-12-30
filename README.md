@@ -1,6 +1,6 @@
 # Slash Commands: Datetime & More
 
-This plugin is a collection of utility commands that can be executed by typing corresponding keywords, which start with a slash (`/`). Current version only supports two type of commands but more may be added in the future.
+This plugin is a collection of utility commands that can be executed by typing corresponding keywords, which start with a `/`. Current version only supports two type of commands but more may be added in the future.
 
 
 ![screencap](https://raw.githubusercontent.com/hieuthi/joplin-plugin-slash-commands/main/docs/slash-commands-v1.0.0-screencap.gif)

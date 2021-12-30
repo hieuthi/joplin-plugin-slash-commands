@@ -11,5 +11,5 @@
 
 Initial version with String and Datetime Commands
 
-[v1.1.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.0.0...v1.1.1
+[v1.1.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.0.0...v1.1.1
 [v1.0.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/releases/tag/v1.0.0
