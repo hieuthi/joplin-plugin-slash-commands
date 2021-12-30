@@ -1,6 +1,6 @@
 # Slash Commands: Datetime & More
 
-This plugin is a collection of utility commands that can be executed by typing corresponding keywords, which start with a slash ('/'). Current version only supports two type of commands but more might be added in the future.
+This plugin is a collection of utility commands that can be executed by typing corresponding keywords, which start with a slash (`/`). Current version only supports two type of commands but more may be added in the future.
 
 
 ![screencap](https://raw.githubusercontent.com/hieuthi/joplin-plugin-slash-commands/main/docs/slash-commands-v1.0.0-screencap.gif)
@@ -9,7 +9,7 @@ This plugin is a collection of utility commands that can be executed by typing c
 ## Usage
 ### String Command
 - String commands simply replace a keyword with one of the predefined strings.
-- **Built-in**: `/greet`, `/task`, `todotxt`
+- **Built-in**: `/greet`, `/task`, `/todotxt`
 - **Definition**: `[ "string" , "<keyword>", ["<string1>", "<string2" ] ]`
 
 ### Datetime Command
@@ -19,6 +19,23 @@ This plugin is a collection of utility commands that can be executed by typing c
 - **Offset formats**: `d-H:M`, `d-H`, `H:M`, `d`
 - **Definition**: `[ "string" , "<keyword>", ["<format1>", "<format2>" ] ]`
 - This command uses [Javascript Date Format](https://blog.stevenlevithan.com/archives/date-time-format) to parse datestring. You can check the original library on how to form your own `format`.
+
+### Calendar Command
+- Calendar commands print out an ascii calendar of the current month or a specified month.
+- **Built-in**: `/calendar`
+- **Examples**: current month `/calendar`, specified month of the current year `/calendar-3`, specified month `/calendar-1-2022`
+- **Definition**: `["calendar", "<keyword>", ["<locale1>", "<locale2>"] ]`
+- Locales are string such as `en-US` or `ja-JP`. Locale can also be `null` which force the plugin to use system locale.
+
+```
+      December 2021       
+Su  Mo  Tu  We  Th  Fr  Sa
+             1   2   3   4
+ 5   6   7   8   9  10  11
+12  13  14  15  16  17  18
+19  20  21  22  23  24  25
+26  27  28  29  30  31
+```
 
 ### Customization
 Even though there is only several types of commands, you can create many useful commands to serve your needs by setting the command definitions in the plugin setting by yourself. The commands definitions is an array of array but due to some awkwardness with Javascript and JSON string parse you need to carefully escape it.
@@ -35,14 +52,15 @@ Even though there is only several types of commands, you can create many useful 
   ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ],
   ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ],
   ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ],
-  ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ]
+  ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ],
+  ["calendar", "calendar", [null,"en-US","ja-JP"] ]
 ]
 ```
 
 There is another awkwardness with Joplin Plugin Setting that only accept a single line value so you need to minify it like this.
 
 ```
-[["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ], ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ], ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ], ["string", "greet", [ "Hello World" ] ], ["string", "task", [ "- [ ] " ] ], ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ], ["datetime", "todoa", [ "\"(A)\" yyyy-mm-dd " ] ], ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ], ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ], ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ], ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ] ]
+[["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ], ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ], ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ], ["string", "greet", [ "Hello World" ] ], ["string", "task", [ "- [ ] " ] ], ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ], ["datetime", "todoa", [ "\"(A)\" yyyy-mm-dd " ] ], ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ], ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ], ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ], ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ], ["calendar", "calendar", [null,"en-US","ja-JP"] ] ]
 ```
 
 I will try to improve the configuration process when I find a better solution. If you messed with the setting and the plugin is no longer work, try paste the above definitions to your setting.
@@ -50,6 +68,7 @@ I will try to improve the configuration process when I find a better solution. I
 ## Acknowledgements
 - Many thanks to @roman-r-m for the great [Quick Link](https://github.com/roman-r-m/joplin-plugin-quick-links) plugin which I used a lot and also a reference for this plugin
 - And Steven Levithan for a simple and easy-to-use [JavaScript Date Format Library](https://blog.stevenlevithan.com/archives/date-time-format)
+- The calendar command is based on Jakub T. Jankiewicz's [ascii-calendar](https://github.com/jcubic/calendar) code.
 
 ## License
 

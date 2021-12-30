@@ -1,3 +1,12 @@
+/* Modified for Joplin Slash Commands plugin and to
+ * support explicit locale specifying
+ *
+ * Copyright (C) Hieu-Thi Luong
+ * Released under MIT license
+ */
+
+const FWLOCALES_ = ["ja-JP", "zh-CN", "zh-HK", "zh-MO", "zh-SG", "zh-TW"];
+
 /* Simple ASCII Calendar similar to Linux cal command
  *
  * Copyright (C) Jakub T. Jankiewicz <https://jcubic.pl>
@@ -6,8 +15,6 @@
 
 // base code from Codpen
 // https://codepen.io/jcubic/pen/dyoJQQv?editors=1010
-
-const FWLOCALES_ = ["ja-JP", "zh-CN", "zh-HK", "zh-MO", "zh-SG", "zh-TW"]
 
 var cal = (function() {
     var SEPARATOR = '  ';
