@@ -12,7 +12,7 @@
     "datetime",
     "slash",
     "commands",
-    "autocomplete"
+    "shortcut"
   ],
   "devDependencies": {
     "@types/node": "^14.0.14",
