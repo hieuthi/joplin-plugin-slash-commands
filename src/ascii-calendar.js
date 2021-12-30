@@ -7,9 +7,15 @@
 // base code from Codpen
 // https://codepen.io/jcubic/pen/dyoJQQv?editors=1010
 
+const FWLOCALES_ = ["ja-JP", "zh-CN", "zh-HK", "zh-MO", "zh-SG", "zh-TW"]
+
 var cal = (function() {
     var SEPARATOR = '  ';
     var LANG = typeof window !== 'undefined' ? window.navigator.language : undefined;
+
+    var shiftCharCode = Δ => c => String.fromCharCode(c.charCodeAt(0) + Δ);
+    var toFullWidth = str => str.replace(/[!-~]/g, shiftCharCode(0xFEE0)).replace(/ /g, "　");
+    var toHalfWidth = str => str.replace(/[!-～]/g, shiftCharCode(-0xFEE0)).replace(/　/g, " ");
 
     // ----------------------------------------------------------------------------------
     function get_day_count(year, month) {
@@ -44,18 +50,26 @@ var cal = (function() {
     }
 
     // ----------------------------------------------------------------------------------
-    function week_days() {
+    function week_days(lang) {
         var result = [];
         for (var i = 0; i <= 6; ++i) {
-            var d = new Date(1970, 1, 1 + i);
-            result.push(d.toLocaleString(LANG, {weekday: 'short'}).substring(0, 2));
+            var d  = new Date(1970, 1, 1 + i);
+            switch (lang){
+                case 'vi-VN':
+                    var ds = d.toLocaleString(lang, {weekday: 'long'}).split(' ')[1].substring(0, 2);
+                    break;
+                default:
+                    var ds = d.toLocaleString(lang, {weekday: 'short'}).substring(0, 2);
+            }
+            ds = ds.length < 2 ? ' ' + ds : ds;
+            result.push(ds);
         }
         return result.join(SEPARATOR);
     }
 
     // ----------------------------------------------------------------------------------
     function days(year, month) {
-        var date = new Date(year + '/' + (month+1) + '/' + 1);
+        var date = new Date(year,month,1);
         var start = date.getDay();
         var end = get_day_count(year, month);
         var result = [];
@@ -80,15 +94,21 @@ var cal = (function() {
     }
 
     // ----------------------------------------------------------------------------------
-    return function generate(year, month) {
+    return function generate(year, month, lang=null) {
+        lang = lang || LANG;
         var result = [];
-        var week = week_days();
-        var date = new Date(year + '/' + (month+1) + '/' + 1);
-        var month_label = date.toLocaleString(LANG, { month: 'long' });
+        var week = week_days(lang);
+        var date = new Date(year,month,1);
+        var month_label = date.toLocaleString(lang, { month: 'long' });
         result.push(center(month_label + ' ' + year, week.length));
         result.push(week);
         result.push(days(year, month));
-        return result.join('\n');
+
+        ret = result.join('\n');
+        if (FWLOCALES_.includes(lang)){
+            ret = toFullWidth(ret);
+        }
+        return ret;
     };
 })();
 
