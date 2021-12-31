@@ -13,7 +13,7 @@ This plugin is a collection of utility commands that can be executed by typing c
 - **Definition**: `[ "string" , "<keyword>", ["<string1>", "<string2" ] ]`
 
 ### Datetime Command
-- Datetime commands print out the current now with one of the predefined datestring format. Optionally you can offset the time by day, hour, and minutes
+- Datetime commands print out the current time using a predefined datestring format. Optionally you can offset the time by day, hour, and minutes
 - **Built-in**: `/now`, `/date`, `/time`, `/todoa`, `/todob`, `/todoc`, `/todod`, `/todoe`
 - **Offset examples**: adding `/now+d-H:M`, subtracting `/now-d-H:M`
 - **Offset formats**: `d-H:M`, `d-H`, `H:M`, `d`
@@ -38,7 +38,7 @@ Su  Mo  Tu  We  Th  Fr  Sa
 ```
 
 ### Customization
-Even though there is only several types of commands, you can create many useful commands to serve your needs by setting the command definitions in the plugin setting by yourself. The commands definitions is an array of array but due to some awkwardness with Javascript and JSON string parse you need to carefully escape it.
+Even though there is only several **types** of commands, you can create many commands by set the command definitions in the plugin setting by yourself. The commands definitions is an array of array but due to some awkwardness with Javascript and JSON string parse you need to carefully escape it.
 
 ```
 [
