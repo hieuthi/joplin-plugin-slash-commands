@@ -10,14 +10,14 @@ This plugin is a collection of utility commands that can be executed by typing c
 ### String Command
 - String commands simply replace a keyword with one of the predefined strings.
 - **Built-in**: `/greet`, `/task`, `/todotxt`
-- **Definition**: `[ "string" , "<keyword>", ["<string1>", "<string2" ] ]`
+- **Definition**: `[ "string" , "<keyword>", ["<string1>", "<string2>" ] ]`
 
 ### Datetime Command
 - Datetime commands print out the current time using a predefined datestring format. Optionally you can offset the time by day, hour, and minutes
 - **Built-in**: `/now`, `/date`, `/time`, `/todoa`, `/todob`, `/todoc`, `/todod`, `/todoe`
 - **Offset examples**: adding `/now+d-H:M`, subtracting `/now-d-H:M`
 - **Offset formats**: `d-H:M`, `d-H`, `H:M`, `d`
-- **Definition**: `[ "string" , "<keyword>", ["<format1>", "<format2>" ] ]`
+- **Definition**: `[ "datetime" , "<keyword>", ["<format1>", "<format2>" ] ]`
 - This command uses [Javascript Date Format](https://blog.stevenlevithan.com/archives/date-time-format) to parse datestring. You can check the original library on how to form your own `format`.
 
 ### Calendar Command
@@ -68,7 +68,7 @@ I will try to improve the configuration process when I find a better solution. I
 ## Acknowledgements
 - Many thanks to @roman-r-m for the great [Quick Link](https://github.com/roman-r-m/joplin-plugin-quick-links) plugin which I used a lot and also a reference for this plugin
 - And Steven Levithan for a simple and easy-to-use [JavaScript Date Format Library](https://blog.stevenlevithan.com/archives/date-time-format)
-- The calendar command is based on Jakub T. Jankiewicz's [ascii-calendar](https://github.com/jcubic/calendar) code.
+- The Calendar Command is based on Jakub T. Jankiewicz's [ascii-calendar](https://github.com/jcubic/calendar) code.
 
 ## License
 
