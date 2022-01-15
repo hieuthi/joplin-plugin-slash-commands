@@ -53,7 +53,7 @@ DatetimeCommand.prototype.getHints = function (token) {
 
   var weekday = 0;
   var sign=0, offsetD=0, offsetH=0, offsetM=0;
-  var params = token.trim().slice(this.keyword_.length);
+  var params = token.slice(this.keyword_.length);
 
   var start = params.indexOf('@');
   if (start >= 0){

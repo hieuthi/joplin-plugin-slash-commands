@@ -1,6 +1,6 @@
 # Changelog
 
-## [v1.2.0] - 2022-01-15
+## [v1.2.1] - 2022-01-15
 ### Changed
 - Changed default definition of `/greet` command
 
@@ -18,6 +18,6 @@
 
 Initial version with String and Datetime Commands
 
-[v1.2.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.1.1...v1.2.0
+[v1.2.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.1.1...v1.2.1
 [v1.1.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.0.0...v1.1.1
 [v1.0.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/releases/tag/v1.0.0
