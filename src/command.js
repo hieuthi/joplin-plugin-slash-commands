@@ -51,36 +51,83 @@ DatetimeCommand.prototype.getHints = function (token) {
   if (this.keyword_ > token.length) { return []; }
   if (this.keyword_ !== token.slice(0,this.keyword_.length)) {return [];}
 
+  var weekday = 0;
   var sign=0, offsetD=0, offsetH=0, offsetM=0;
-  var offset = token.slice(this.keyword_.length);
-  if (offset.length > 0){
-    sign = offset[0] == '+' ? 1 : offset[0] == '-' ? -1 : 0;
+  var params = token.trim().slice(this.keyword_.length);
+
+  var start = params.indexOf('@');
+  if (start >= 0){
+    for (var end = start+1; end<params.length; end++){
+      var ch = params[end];
+      if (/[a-zA-Z0-9]/.test(ch)==false){
+        break;
+      }
+    }
+    var query = params.slice(start+1,end)
+    params = params.slice(0,start) + params.slice(end);
+    switch (query.toLowerCase()){
+      case '1':
+      case 'sun':
+        weekday=1; break;
+      case '2':
+      case 'mon':
+        weekday=2; break;
+      case '3':
+      case 'tue':
+        weekday=3; break;
+      case '4':
+      case 'wed':
+        weekday=4; break;
+      case '5':
+      case 'thu':
+        weekday=5; break;
+      case '6':
+      case 'fri':
+        weekday=6; break;
+      case '7':
+      case 'sat':
+        weekday=7; break;
+      default:
+        weekday=0;
+    }
+  }
+
+  if (params.length > 0){
+    sign = params[0] == '+' ? 1 : params[0] == '-' ? -1 : 0;
     if (sign==0) { return [] };
-    if (offset.length > 1 ){
-      offset = offset.slice(1);
-      if (offset.indexOf('-') > 0){ // ['d-h:m','d-h']
-        var params = offset.split('-');
-        offsetD = parseInt(params[0]) || 0;
-        if (params.length > 1) {
-          params = params[1].split(':');
-          offsetH = parseInt(params[0]) || 0;
-          offsetM = params.length > 1 ? parseInt(params[1]) || 0 : offsetM;
+    if (params.length > 1 ){
+      params = params.slice(1);
+      if (params.indexOf('-') > 0){ // ['d-h:m','d-h']
+        var args = params.split('-');
+        offsetD = parseInt(args[0]) || 0;
+        if (args.length > 1) {
+          args = args[1].split(':');
+          offsetH = parseInt(args[0]) || 0;
+          offsetM = args.length > 1 ? parseInt(args[1]) || 0 : offsetM;
         }
       } else { // ['h:m','d']
-        var params = offset.split(':');
-        if (params.length > 1 ) {
-          offsetH = parseInt(params[0]) || 0;
-          offsetM = parseInt(params[1]) || 0;
+        var args = params.split(':');
+        if (args.length > 1 ) {
+          offsetH = parseInt(args[0]) || 0;
+          offsetM = parseInt(args[1]) || 0;
         } else {
-          offsetD = parseInt(params[0]) || 0;
+          offsetD = parseInt(args[0]) || 0;
         }
       }
     }
   }
 
   let hints = [];
-  const ts = new Date().getTime();
-  const dt = new Date(ts + sign*(offsetD*8.64e+7 + offsetH*3.6e+6 + offsetM*0.6e+5))
+  const now = new Date();
+  if (weekday==0){
+    var dt = new Date(now.getTime() + sign*(offsetD*8.64e+7 + offsetH*3.6e+6 + offsetM*0.6e+5))
+  } else {
+    var offsetWD = ( weekday + 7 - 1 - now.getDay() ) % 7;
+    offsetWD = offsetWD == 0 ? 7 : offsetWD;
+    var dt = new Date(now.getTime() + offsetWD*8.64e+7 + sign*(offsetD*7*8.64e+7 + offsetH*3.6e+6 + offsetM*0.6e+5))
+  }
+
+
   this.options_.forEach(option => {
     let text = dateFormat(dt, option);
     hints.push({
