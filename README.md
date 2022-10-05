@@ -67,6 +67,9 @@ There is another awkwardness with Joplin Plugin Setting that only accept a singl
 
 I will try to improve the configuration process when I find a better solution. If you messed with the setting and the plugin is no longer work, try paste the above definitions to your setting.
 
+## Discuss the plugin with other Joplin users
+You can discuss this plugin on the Joplin forum [Slash commands plugin thread](https://discourse.joplinapp.org/t/plugin-slash-commands-datetime-more/22573/4).
+
 ## Acknowledgements
 - Many thanks to @roman-r-m for the great [Quick Link](https://github.com/roman-r-m/joplin-plugin-quick-links) plugin which I used a lot and also a reference for this plugin
 - And Steven Levithan for a simple and easy-to-use [JavaScript Date Format Library](https://blog.stevenlevithan.com/archives/date-time-format)
