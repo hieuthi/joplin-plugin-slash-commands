@@ -22,9 +22,24 @@ module.exports = {
             const cursor = cm.getCursor();
             const token  = cm.getRange(change.from, cursor);
             let hints = [];
+            let supps = [];
             for (let i=0; i<cm.state.slashCommands.length; i++){
-              hints = hints.concat(cm.state.slashCommands[i].getHints(token))
+              var command = cm.state.slashCommands[i];
+              let keyword = command.keyword_;
+              let icon    = command.icon_;
+              hints = hints.concat(command.getHints(token))
+              if (token == keyword.substring(0,token.length)){
+                supps.push({
+                  text: keyword,
+                  displayText: icon + '\t' + keyword,
+                  hint: async (cm, data, completion) => {
+                    const from = completion.from || data.from;
+                    cm.replaceRange(keyword, from, cm.getCursor(), "complete");
+                  },
+                })
+              }
             }
+            hints = hints.concat(supps);
             callback({
               list: hints,
               from: change.from,
@@ -35,6 +50,7 @@ module.exports = {
           CodeMirror.showHint(cm, hintFunc, {
             completeSingle: false,
             closeOnUnfocus: true,
+            completeSingle: false,
             async: true,
             closeCharacters: /[()\[\]{};>,.`'"]/
           });

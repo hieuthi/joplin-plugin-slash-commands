@@ -19,6 +19,7 @@ function Command(keyword, options, configs=null) {
   this.keyword_ = keyword;
   this.options_ = options;
   this.configs_ = configs;
+  this.icon_ = '';
 };
 Command.prototype.getHints = function (token) {return null};
 Command.create = function(definition, prefix='/') {
@@ -37,15 +38,19 @@ Command.create = function(definition, prefix='/') {
 }
 
 // COMMAND: String
-function StringCommand(keyword, options, configs=null) { Command.call(this, keyword, options, configs); };
+function StringCommand(keyword, options, configs=null) { 
+  Command.call(this, keyword, options, configs); 
+  this.icon_ = '𝐓';
+};
 StringCommand.prototype.getHints = function (token) {
   if (this.keyword_ !== token) {return [];}
 
   let hints = [];
+  let icon = this.icon_;
   this.options_.forEach(option => {
     hints.push({
       text: option,
-      displayText: '𝐓\t' + option.replace(/\n/gm,"⏎")  + ' ',
+      displayText: icon + '\t' + option.replace(/\n/gm,"⏎")  + ' ',
       hint: async (cm, data, completion) => {
         const from = completion.from || data.from;
         cm.replaceRange(option, from, cm.getCursor(), "complete");
@@ -58,6 +63,7 @@ StringCommand.prototype.getHints = function (token) {
 // COMMAND: Datetime 
 function DatetimeCommand(keyword, options, configs=null) {
   Command.call(this, keyword, options, configs);
+  this.icon_ = '🕒';
 };
 DatetimeCommand.prototype.getHints = function (token) {
   if (this.keyword_ > token.length) { return []; }
@@ -147,11 +153,12 @@ DatetimeCommand.prototype.getHints = function (token) {
   } else {
     dateFormat.i18n = I18N_;
   }
+  let icon = this.icon_;
   this.options_.forEach(option => {
     let text = dateFormat(dt, option);
     hints.push({
       text: text,
-      displayText: '🕒\t' + text + ' ',
+      displayText: icon + '\t' + text + ' ',
       hint: async (cm, data, completion) => {
         const from = completion.from || data.from;
         cm.replaceRange(text, from, cm.getCursor(), "complete");
@@ -162,7 +169,10 @@ DatetimeCommand.prototype.getHints = function (token) {
 };
 
 
-function CalendarCommand(keyword, options, configs=null) { Command.call(this, keyword, options, configs); };
+function CalendarCommand(keyword, options, configs=null) { 
+  Command.call(this, keyword, options, configs); 
+  this.icon_ = '📅';
+};
 CalendarCommand.prototype.getHints = function (token) {
   if (this.keyword_ > token.length) { return []; }
   if (this.keyword_ !== token.slice(0,this.keyword_.length)) {return [];}
@@ -187,6 +197,7 @@ CalendarCommand.prototype.getHints = function (token) {
 
   let hints = [];
   let date = new Date(year,month,1);
+  let icon = this.icon_;
   this.options_.forEach(option => {
     let text    = "";
     let display = "";
@@ -197,14 +208,14 @@ CalendarCommand.prototype.getHints = function (token) {
         text += asciiCalendar(year, month, lang);
         text += "\n\n";
       })
-      display = `📅\t${month+1} ${year} (DEBUG - all locales)`;
+      display = `${icon}\t${month+1} ${year} (DEBUG - all locales)`;
     } else if ( LOCALES_.includes(option) ){
       text    = asciiCalendar(year, month, option);
-      display = `📅\t${date.toLocaleString(option, { month: 'long' })} ${year} (${option})`;
+      display = `${icon}\t${date.toLocaleString(option, { month: 'long' })} ${year} (${option})`;
     } else {
       let lang = typeof window !== 'undefined' ? window.navigator.language : undefined
       text    = asciiCalendar(year, month, lang);
-      display = `📅\t${date.toLocaleString(lang, { month: 'long' })} ${year} (${option} → ${lang})`;
+      display = `${icon}\t${date.toLocaleString(lang, { month: 'long' })} ${year} (${option} → ${lang})`;
     }
     hints.push({
       text: text,
