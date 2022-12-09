@@ -61,7 +61,7 @@ module.exports = {
     return {
       plugin: plugin,
       codeMirrorResources: [ 'addon/hint/show-hint' ],
-      codeMirrorOptions: {'slashCommands': true},
+      codeMirrorOptions: {'slashCommands': false},
       assets: function() {
         return [ { name: './hints.css'} ];
       }

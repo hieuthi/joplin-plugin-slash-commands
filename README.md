@@ -20,6 +20,7 @@ This plugin is a collection of utility commands that can be executed by typing c
 - **Weekday examples**: next monday `/date@mon` (exclude today), last monday (or today if today is Monday) `/date@mon-1`
 - **Weekday keywords**: `@1` or `@sun` for Sunday, `@2` or `@mon` for Monday, `@3` or `@tue` for Tuesday, `@4` or `@wed` for Wednesday, `@5` or `@thu` for Thursday, `@6` or `@fri` for Friday, `@7` or `@sat` for Saturday
 - **Definition**: `[ "datetime" , "<keyword>", ["<format1>", "<format2>" ] ]`
+- **Definition with international day and month names**: `[ "datetime" , "<keyword>", ["<format1>", "<format2>" ], {"dayNames": ["<Sun>", "<Mon>", "<Tue>", "<Wed>", "<Thu>", "<Fri>", "<Sat>", "<Sunday>", "<Monday>", "<Tuesday>", "<Wednesday>", "<Thursday>", "<Friday>", "<Saturday>"], "monthNames": ["<Jan>", "<Feb>", "<Mar>", "<Apr>", "<May>", "<Jun>", "<Jul>", "<Aug>", "<Sep>", "<Oct>", "<Nov>", "<Dec>", "<January>", "<February>", "<March>", "<April>", "<May>", "<June>", "<July>", "<August>", "<September>", "<October>", "<November>", "<December>"] } ]`
 - This command uses [Javascript Date Format](https://blog.stevenlevithan.com/archives/date-time-format) to parse datestring. You can check the original library on how to form your own `format`.
 
 ### Calendar Command
@@ -47,6 +48,7 @@ Even though there is only several **types** of commands, you can create many com
   ["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ],
   ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ],
   ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ],
+  ["datetime", "jdate", [ "yyyy年mm月dd日(ddd)"], { "dayNames": ["日", "月", "火", "水", "木", "金", "土", "日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"], "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]}],
   ["string", "greet", [ "Hello", "你好", "Bonjour", "Hallo", "नमस्ते", "こんにちは", "안녕하세요", "Hola", "Xin chào" ] ],
   ["string", "task", [ "- [ ] " ] ],
   ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ],
@@ -62,10 +64,10 @@ Even though there is only several **types** of commands, you can create many com
 There is another awkwardness with Joplin Plugin Setting that only accept a single line value so you need to minify it like this.
 
 ```
-[["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ], ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ], ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ], ["string", "greet", [ "Hello", "你好", "Bonjour", "Hallo", "नमस्ते", "こんにちは", "안녕하세요", "Hola", "Xin chào" ] ], ["string", "task", [ "- [ ] " ] ], ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ], ["datetime", "todoa", [ "\"(A)\" yyyy-mm-dd " ] ], ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ], ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ], ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ], ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ], ["calendar", "calendar", [null,"en-US","ja-JP"] ] ]
+[ ["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-mm-dd\"T\"HH:MM:ss" ] ], ["datetime", "date", [ "dd/mm/yyyy", "yyyy-mm-dd" ] ], ["datetime", "time", [ "HH:MM", "HH:MM:ss" ] ], ["datetime", "jdate", [ "yyyy年mm月dd日(ddd)"], { "dayNames": ["日", "月", "火", "水", "木", "金", "土", "日曜日", "月曜日", "火曜日", "水曜日", "木曜日", "金曜日", "土曜日"], "monthNames": ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月", "一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"]}], ["string", "greet", [ "Hello", "你好", "Bonjour", "Hallo", "नमस्ते", "こんにちは", "안녕하세요", "Hola", "Xin chào" ] ], ["string", "task", [ "- [ ] " ] ], ["string", "todotxt", [ "```todotxt sort:default\n\n```" ] ], ["datetime", "todoa", [ "\"(A)\" yyyy-mm-dd " ] ], ["datetime", "todob", [ "\"(B)\" yyyy-mm-dd " ] ], ["datetime", "todoc", [ "\"(C)\" yyyy-mm-dd " ] ], ["datetime", "todod", [ "\"(D)\" yyyy-mm-dd " ] ], ["datetime", "todoe", [ "\"(E)\" yyyy-mm-dd " ] ], ["calendar", "calendar", [null,"en-US","ja-JP"]] ]
 ```
 
-I will try to improve the configuration process when I find a better solution. If you messed with the setting and the plugin is no longer work, try paste the above definitions to your setting.
+I will try to improve the configuration process when I find a better solution. If you messed with the setting and the plugin is no longer work, try paste the above definitions to your setting or just leave the setting **BLANK** the plugin will automatically revert it back to the DEFAULT definition.
 
 ## Acknowledgements
 - Many thanks to @roman-r-m for the great [Quick Link](https://github.com/roman-r-m/joplin-plugin-quick-links) plugin which I used a lot and also a reference for this plugin
