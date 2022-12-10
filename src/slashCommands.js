@@ -64,12 +64,12 @@ module.exports = {
         }
         if (val){
           cm.on('inputRead', showSlashHints);
-          setTimeout( async function() {
-            const definitions = await _context.postMessage("get-definitions");
-            if (definitions && definitions.length > 0){
-              cm.state.slashCommands = createCommands(definitions);
-            }
-          }, 1000);
+        }
+      });
+      CodeMirror.defineExtension('updateSlashDefinitions', function(message) {
+        var definitions = message;
+        if (definitions && definitions.length > 0){
+          this.state.slashCommands = createCommands(definitions);
         }
       });
     };
@@ -77,7 +77,7 @@ module.exports = {
     return {
       plugin: plugin,
       codeMirrorResources: [ 'addon/hint/show-hint' ],
-      codeMirrorOptions: {'slashCommands': false},
+      codeMirrorOptions: {'slashCommands': true},
       assets: function() {
         return [ { name: './hints.css'} ];
       }
