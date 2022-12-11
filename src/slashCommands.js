@@ -28,7 +28,7 @@ module.exports = {
               let keyword = command.keyword_;
               let icon    = command.icon_;
               hints = hints.concat(command.getHints(token))
-              if (token == keyword.substring(0,token.length)){
+              if (token.length> 0 && token == keyword.substring(0,token.length)){
                 supps.push({
                   text: keyword,
                   displayText: icon + '\t' + keyword,
@@ -64,6 +64,7 @@ module.exports = {
         }
         if (val){
           cm.on('inputRead', showSlashHints);
+          await _context.postMessage("request-slash-definitions");
         }
       });
       CodeMirror.defineExtension('updateSlashDefinitions', function(message) {

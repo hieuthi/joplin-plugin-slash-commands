@@ -46,5 +46,12 @@ joplin.plugins.register({
     }
     await joplin.settings.onChange(updateDefinitions);
     setTimeout(updateDefinitions, 1000);
+
+    await joplin.contentScripts.onMessage('slashCommands', async (message:any) => {
+      if (message == "request-slash-definitions") {
+        updateDefinitions();
+      }
+      return null;
+    });
   },
 });
