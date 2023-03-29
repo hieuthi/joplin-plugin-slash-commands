@@ -7,6 +7,8 @@ This plugin is a collection of utility commands that can be executed by typing c
 
 
 ## Usage
+- To use the plugin type `/<keyword>', then after the full keyword is entered select the option from the dropdown menu. This selection can be done with arrow keys or the mouse.
+- If you type an escape character while the keyword selection dropdown is on screen it will not generate the output it will complete the keyword and end the prompt.
 ### String Command
 - String commands simply replace a keyword with one of the predefined strings.
 - **Built-in**: `/greet`, `/task`, `/todotxt`
