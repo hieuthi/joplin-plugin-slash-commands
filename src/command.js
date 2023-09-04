@@ -28,6 +28,12 @@ Command.create = function(definition, prefix='/') {
   switch (definition[0]){
     case 'string':
       return new StringCommand(prefix + definition[1], definition[2], configs);
+    case 'html':
+      return new HtmlCommand(prefix + definition[1], definition[2], configs);
+    case 'code':
+      return new CodeCommand(prefix + definition[1], definition[2], configs);
+    case 'table':
+      return new TableCommand(prefix + definition[1], definition[2], configs);
     case 'datetime':
       return new DatetimeCommand(prefix + definition[1], definition[2], configs);
     case 'calendar':
@@ -43,6 +49,76 @@ function StringCommand(keyword, options, configs=null) {
   this.icon_ = '𝐓';
 };
 StringCommand.prototype.getHints = function (token) {
+  if (this.keyword_ !== token) {return [];}
+
+  let hints = [];
+  let icon = this.icon_;
+  this.options_.forEach(option => {
+    hints.push({
+      text: option,
+      displayText: icon + '\t' + option.replace(/\n/gm,"⏎")  + ' ',
+      hint: async (cm, data, completion) => {
+        const from = completion.from || data.from;
+        cm.replaceRange(option, from, cm.getCursor(), "complete");
+      },
+    })
+  })
+  return hints;
+}
+
+// COMMAND: HTML
+function HtmlCommand(keyword, options, configs=null) { 
+  Command.call(this, keyword, options, configs); 
+  this.icon_ = '❬H❭';
+};
+HtmlCommand.prototype.getHints = function (token) {
+  if (this.keyword_ !== token) {return [];}
+
+  let hints = [];
+  let icon = this.icon_;
+  this.options_.forEach(option => {
+    hints.push({
+      text: option,
+      displayText: icon + '\t' + option.replace(/\n/gm,"⏎")  + ' ',
+      hint: async (cm, data, completion) => {
+        const from = completion.from || data.from;
+        cm.replaceRange(option, from, cm.getCursor(), "complete");
+      },
+    })
+  })
+  return hints;
+}
+
+// COMMAND: CODE
+function CodeCommand(keyword, options, configs=null) { 
+  Command.call(this, keyword, options, configs); 
+  this.icon_ = '❬c❭';
+};
+CodeCommand.prototype.getHints = function (token) {
+  if (this.keyword_ !== token) {return [];}
+
+  let hints = [];
+  let icon = this.icon_;
+  this.options_.forEach(option => {
+    hints.push({
+      text: option,
+      displayText: icon + '\t' + option.replace(/\n/gm,"⏎")  + ' ',
+      hint: async (cm, data, completion) => {
+        const from = completion.from || data.from;
+        cm.replaceRange(option, from, cm.getCursor(), "complete");
+      },
+    })
+  })
+  return hints;
+}
+
+
+// COMMAND: TABLE
+function TableCommand(keyword, options, configs=null) { 
+  Command.call(this, keyword, options, configs); 
+  this.icon_ = '◫';
+};
+TableCommand.prototype.getHints = function (token) {
   if (this.keyword_ !== token) {return [];}
 
   let hints = [];
