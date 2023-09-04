@@ -34,6 +34,8 @@ Command.create = function(definition, prefix='/') {
       return new CodeCommand(prefix + definition[1], definition[2], configs);
     case 'table':
       return new TableCommand(prefix + definition[1], definition[2], configs);
+    case 'plugin':
+      return new PluginCommand(prefix + definition[1], definition[2], configs);
     case 'datetime':
       return new DatetimeCommand(prefix + definition[1], definition[2], configs);
     case 'calendar':
@@ -69,7 +71,7 @@ StringCommand.prototype.getHints = function (token) {
 // COMMAND: HTML
 function HtmlCommand(keyword, options, configs=null) { 
   Command.call(this, keyword, options, configs); 
-  this.icon_ = '❬H❭';
+  this.icon_ = '❬ℎ❭';
 };
 HtmlCommand.prototype.getHints = function (token) {
   if (this.keyword_ !== token) {return [];}
@@ -92,7 +94,7 @@ HtmlCommand.prototype.getHints = function (token) {
 // COMMAND: CODE
 function CodeCommand(keyword, options, configs=null) { 
   Command.call(this, keyword, options, configs); 
-  this.icon_ = '❬c❭';
+  this.icon_ = '❬∁❭';
 };
 CodeCommand.prototype.getHints = function (token) {
   if (this.keyword_ !== token) {return [];}
@@ -112,13 +114,35 @@ CodeCommand.prototype.getHints = function (token) {
   return hints;
 }
 
-
 // COMMAND: TABLE
 function TableCommand(keyword, options, configs=null) { 
   Command.call(this, keyword, options, configs); 
-  this.icon_ = '◫';
+  this.icon_ = '⊞';
 };
 TableCommand.prototype.getHints = function (token) {
+  if (this.keyword_ !== token) {return [];}
+
+  let hints = [];
+  let icon = this.icon_;
+  this.options_.forEach(option => {
+    hints.push({
+      text: option,
+      displayText: icon + '\t' + option.replace(/\n/gm,"⏎")  + ' ',
+      hint: async (cm, data, completion) => {
+        const from = completion.from || data.from;
+        cm.replaceRange(option, from, cm.getCursor(), "complete");
+      },
+    })
+  })
+  return hints;
+}
+
+// COMMAND: PLUGIN
+function PluginCommand(keyword, options, configs=null) { 
+  Command.call(this, keyword, options, configs); 
+  this.icon_ = '℗';
+};
+PluginCommand.prototype.getHints = function (token) {
   if (this.keyword_ !== token) {return [];}
 
   let hints = [];
