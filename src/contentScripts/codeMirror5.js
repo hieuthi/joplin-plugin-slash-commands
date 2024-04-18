@@ -1,11 +1,15 @@
-const Command = require('./command.js');
 
 const COMMAND_PREFIX = '/';
 
 module.exports = {
-  default: function(_context) { 
-
+  default: function(_context) {
     function plugin(CodeMirror) {
+      // Handled by CodeMirror6.ts
+      if (CodeMirror.cm6) return;
+
+      // Requiring Command at the top level of the file can cause an error
+      // when loading in CodeMirror 6 (requires are handled differently).
+      const Command = require('../command.js');
 
       function createCommands(definitions) {
         const commands = [];

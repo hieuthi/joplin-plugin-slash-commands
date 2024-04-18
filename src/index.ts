@@ -6,12 +6,6 @@ const DEFAULT_DEFINITIONS = '[ ["datetime", "now", [ "dd/mm/yyyy HH:MM", "yyyy-m
 
 joplin.plugins.register({
   onStart: async function() {
-
-    await joplin.contentScripts.register(
-      ContentScriptType.CodeMirrorPlugin,
-      'slashCommands',
-      './slashCommands.js'
-    );
     await joplin.settings.registerSection('settings.slashCommands', {
       label: 'Slash Commands',
       iconName: 'fas fa-exclamation'
@@ -47,11 +41,29 @@ joplin.plugins.register({
     await joplin.settings.onChange(updateDefinitions);
     setTimeout(updateDefinitions, 1000);
 
-    await joplin.contentScripts.onMessage('slashCommands', async (message:any) => {
-      if (message == "request-slash-definitions") {
-        updateDefinitions();
-      }
-      return null;
-    });
+    const registerSlashCommandsContentScript = async (id: string, path: string) => {
+      await joplin.contentScripts.register(
+        ContentScriptType.CodeMirrorPlugin,
+        id,
+        path,
+      );
+
+      // Each CodeMirror plugin needs its own ID, and thus, its own event listener.
+      await joplin.contentScripts.onMessage(id, async (message: any) => {
+        if (message == "request-slash-definitions") {
+          updateDefinitions();
+        }
+        return null;
+      });
+    };
+
+    await registerSlashCommandsContentScript(
+      'slashCommands-cm5',
+      './contentScripts/codeMirror5.js'
+    );
+    await registerSlashCommandsContentScript(
+      'slashCommands-cm6',
+      './contentScripts/codeMirror6.js'
+    );
   },
 });
