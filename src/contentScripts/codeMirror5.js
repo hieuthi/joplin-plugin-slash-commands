@@ -4,7 +4,7 @@ const COMMAND_PREFIX = '/';
 module.exports = {
   default: function(_context) {
     function plugin(CodeMirror) {
-      // Handled by CodeMirror6.ts
+      // Handled by ./codeMirror6.ts
       if (CodeMirror.cm6) return;
 
       // Requiring Command at the top level of the file can cause an error

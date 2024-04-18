@@ -35,15 +35,12 @@ export default (pluginContext: ContentScriptContext) => {
               label: hint.displayText,
               apply: (view, _completion, from, to) => {
                 view.dispatch(
-                  insertCompletionText(
-                    view.state,
-                    hint.text,
-                    from, to,
-                  ),
+                  insertCompletionText(view.state, hint.text, from, to)
                 );
               },
             });
           }
+
           if (command.keyword_.indexOf(searchText) === 0) {
             suggestions.push({
               label: `${command.icon_} ${command.keyword_}`,
