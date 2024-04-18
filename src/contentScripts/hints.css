@@ -1,4 +1,4 @@
-.CodeMirror-hints {
+.CodeMirror-hints, .cm-tooltip.cm-tooltip {
   position: absolute;
   z-index: 10;
   overflow: hidden;
@@ -13,7 +13,7 @@
   border-radius: 3px;
   border: 1px solid silver;
 
-  background: white;
+  background-color: white;
   font-size: 90%;
   font-family: monospace;
 
@@ -23,7 +23,7 @@
   tab-size:  3;
 }
 
-.CodeMirror-hint {
+.CodeMirror-hint, .cm-tooltip li {
   margin: 0;
   padding: 0 4px;
   border-radius: 2px;
@@ -32,7 +32,7 @@
   cursor: pointer;
 }
 
-li.CodeMirror-hint-active {
-  background: #08f;
+li.CodeMirror-hint-active, .cm-tooltip li[aria-selected] {
+  background-color: #08f;
   color: white;
 }

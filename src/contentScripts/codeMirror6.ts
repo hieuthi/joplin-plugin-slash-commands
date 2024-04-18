@@ -46,7 +46,7 @@ export default (pluginContext: ContentScriptContext) => {
           }
           if (command.keyword_.indexOf(searchText) === 0) {
             suggestions.push({
-              label: command.keyword_,
+              label: `${command.icon_} ${command.keyword_}`,
               apply: (view, _completion, from, to) => {
                 // The input.type userEvent allows the completion dialog to stay open
                 // and provide suggestions for he completed command.
