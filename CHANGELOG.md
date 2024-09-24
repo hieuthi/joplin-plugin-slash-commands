@@ -1,5 +1,11 @@
 # Changelog
 
+## [v1.4.0] - 2024-09-24
+### Changed
+- Support CodeMirror6 (@personalizedrefrigerator)
+- Support 2 steps completion thanks to CodeMirror6 (@personalizedrefrigerator)
+- Add `Space` as a close character
+
 ## [v1.3.1] - 2022-12-10
 ### Changed
 - Fixed bug where plugin failed to load definitons
@@ -26,6 +32,7 @@
 ## [v1.0.0] - 2021-12-23
 Initial version with String and Datetime Commands
 
+[v1.4.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.3.1...v1.4.0
 [v1.3.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.2.1...v1.3.1
 [v1.2.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.1.1...v1.2.1
 [v1.1.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.0.0...v1.1.1
