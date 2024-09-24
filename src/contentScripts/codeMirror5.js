@@ -56,7 +56,7 @@ module.exports = {
             closeOnUnfocus: true,
             completeSingle: false,
             async: true,
-            closeCharacters: /[()\[\]{};>,.`'"]/
+            closeCharacters: /[()\[\]{};>,.`'" ]/
           });
         }
       }

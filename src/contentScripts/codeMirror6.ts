@@ -17,7 +17,7 @@ export default (pluginContext: ContentScriptContext) => {
       let commands: any[] = [];
       const provideCompletions = async (context: CompletionContext): Promise<CompletionResult> => {
         // Start on slash, match any characters that aren't in ()\[\]{};>,.`'"
-        const prefix = context.matchBefore(/\/[^()\[\]{};>,.`'"]*/);
+        const prefix = context.matchBefore(/\/[^()\[\]{};>,.`'" ]*/);
         if (!prefix) {
           return null;
         }
