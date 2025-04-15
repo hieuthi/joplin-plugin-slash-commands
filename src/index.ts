@@ -32,7 +32,7 @@ joplin.plugins.register({
       try {
         const definitions = JSON.parse(defstring);
         console.log("Slash Commands: Sucessfully loaded " + defstring);
-        joplin.commands.execute('editor.execCommand', {name: 'updateSlashDefinitions', args: [definitions]});
+        await joplin.commands.execute('editor.execCommand', {name: 'updateSlashDefinitions', args: [definitions]});
       } catch (error) {
         console.log("ERROR: Slash Commands Plugin has failed to parse commands definition, please check your syntax");
         console.log("ERROR: " + error);
@@ -51,16 +51,16 @@ joplin.plugins.register({
       // Each CodeMirror plugin needs its own ID, and thus, its own event listener.
       await joplin.contentScripts.onMessage(id, async (message: any) => {
         if (message == "request-slash-definitions") {
-          updateDefinitions();
+          await updateDefinitions();
         }
         return null;
       });
     };
 
-    await registerSlashCommandsContentScript(
-      'slashCommands-cm5',
-      './contentScripts/codeMirror5.js'
-    );
+    // await registerSlashCommandsContentScript(
+    //   'slashCommands-cm5',
+    //   './contentScripts/codeMirror5.js'
+    // );
     await registerSlashCommandsContentScript(
       'slashCommands-cm6',
       './contentScripts/codeMirror6.js'

@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.5.0] - 2025-04-16
+### Added
+- Supported mobile device
+
+### Changed
+- Fixed unhandled promise bug
+
 ## [v1.4.0] - 2024-09-24
 ### Changed
 - Support CodeMirror6 (@personalizedrefrigerator)
@@ -32,6 +39,7 @@
 ## [v1.0.0] - 2021-12-23
 Initial version with String and Datetime Commands
 
+[v1.5.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.4.0...v1.5.0
 [v1.4.0]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.3.1...v1.4.0
 [v1.3.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.2.1...v1.3.1
 [v1.2.1]: https://github.com/hieuthi/joplin-plugin-slash-commands/compare/v1.1.1...v1.2.1
